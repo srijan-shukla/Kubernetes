@@ -1,5 +1,5 @@
 # Use the Alpine Linux-based Python 3 image for ARM
-FROM python:3.13.0a4-alpine3.19
+FROM python
 
 # Set the working directory in the container
 WORKDIR /app
@@ -11,7 +11,7 @@ COPY . /app
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Expose the port on which your Flask app runs
-EXPOSE 5000
+expose 6005
 
 # Run the Flask application
-CMD ["python", "app.py"]
+CMD ["python3", "app.py"]
