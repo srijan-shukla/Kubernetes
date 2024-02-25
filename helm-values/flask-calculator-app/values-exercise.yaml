@@ -89,7 +89,7 @@ affinity:
 
 service:
   enabled: true
-  type: Loadbalaner
+  type: LoadBalancer
   name: fca
   port: 80
   targetPort: 6005
