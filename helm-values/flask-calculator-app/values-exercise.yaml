@@ -89,8 +89,8 @@ affinity:
 
 service:
   enabled: true
-  type: ClusterIP
-  name: tomcat
+  type: Loadbalaner
+  name: fca
   port: 80
   targetPort: 6005
 
