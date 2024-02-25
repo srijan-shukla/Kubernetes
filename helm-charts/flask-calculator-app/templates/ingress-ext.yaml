@@ -54,5 +54,4 @@ spec:
               serviceName: {{ $svcName }}
               servicePort: {{ $svcPort }}
               {{- end }}
-          {{- end }}
 {{- end }}
