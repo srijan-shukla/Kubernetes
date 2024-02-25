@@ -127,13 +127,13 @@ ingress:
     alb.ingress.kubernetes.io/unhealthy-threshold-count: "3"
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/tags: component=fca,environment=prod
-    path: /fca
-    pathType: Prefix
-    backend:
-      service:
-        name: flask-calculator-app
-        port:
-          number: 80
+path: /fca
+pathType: Prefix
+backend:
+  service:
+    name: flask-calculator-app
+    port:
+      number: 80
     
   # path: 
   #   /fca:
