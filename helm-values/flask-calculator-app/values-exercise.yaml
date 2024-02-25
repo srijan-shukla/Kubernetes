@@ -89,7 +89,7 @@ affinity:
 
 service:
   enabled: true
-  type: LoadBalancer
+  type: ClusterIP
   name: fca
   port: 80
   targetPort: 6005
