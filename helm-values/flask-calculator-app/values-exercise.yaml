@@ -110,7 +110,7 @@ springProfileActive: ""
 #   enabled: true
 
 ingress:
-  enabled: true
+  enabled: false
   annotations:
     # alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:ap-south-1:182401677120:certificate/34e13411-f8f1-4df4-a672-64c9d79f90c5"
     alb.ingress.kubernetes.io/group.name: prod-fca
