@@ -39,7 +39,7 @@ securityContext:
 image:
   repository: 590184126329.dkr.ecr.ap-south-1.amazonaws.com/flask-calculator-app/exercise
   pullPolicy: IfNotPresent
-  tag: '112acca'
+  tag: '0b1ee1a'
 
 env: []  
   
@@ -111,5 +111,28 @@ ingress:
 
 ingressExt:
   enabled: false
+  annotations:
+    # alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:ap-south-1:182401677120:certificate/34e13411-f8f1-4df4-a672-64c9d79f90c5"
+    alb.ingress.kubernetes.io/group.name: prod-fca
+    alb.ingress.kubernetes.io/healthcheck-path: /health
+    alb.ingress.kubernetes.io/healthcheck-port: "6005"
+    alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
+    alb.ingress.kubernetes.io/healthcheck-timeout-seconds: "3"
+    alb.ingress.kubernetes.io/healthy-threshold-count: "3"
+    alb.ingress.kubernetes.io/security-groups: sg-01360f7ae2e0f03a6
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/healthcheck-interval-seconds: '5'
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/unhealthy-threshold-count: "3"
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/tags: component=fca,environment=prod
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: review-service-stg.paytm.com
+      paths:
+      - path: /*
+        pathType: ImplementationSpecific
+  tls: []
 
 # Ingress section ends here
