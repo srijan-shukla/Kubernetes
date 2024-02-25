@@ -2,11 +2,11 @@ from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/fca')
 def index():
     return render_template('index.html')
 
-@app.route('/calculate', methods=['POST'])
+@app.route('/fca/calculate', methods=['POST'])
 def calculate():
     if request.is_json:
         data = request.json
@@ -44,12 +44,12 @@ def calculate():
     except ValueError:
         return jsonify({'error': 'Invalid input, please provide numeric values'}), 400
 
-@app.route('/health')
+@app.route('/fca/health')
 def health():
     # Perform a test calculation to check if the endpoint is functioning properly
     try:
         # Provide valid input parameters for the test calculation
-        response = app.test_client().post('/calculate', json={'num1': 1, 'num2': 1, 'operation': 'add'})
+        response = app.test_client().post('/fca/calculate', json={'num1': 1, 'num2': 1, 'operation': 'add'})
         if response.status_code == 200:
             return jsonify({'status': 'ok'}), 200
         else:
