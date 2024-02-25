@@ -11,7 +11,7 @@ spec:
     - port: {{ .Values.service.port }}
       targetPort: {{ .Values.service.targetPort }}
       protocol: TCP
-      name: tomcat
+      name: {{ .Values.service.name }}
   selector:
     {{- include "newApp.selectorLabels" . | nindent 4 }}
 {{- end }}
