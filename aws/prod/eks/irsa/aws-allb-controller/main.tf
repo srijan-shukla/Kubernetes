@@ -47,7 +47,6 @@ locals {
   cluster_version = "1.28"
   environment     = "prod"
   component       = "fca"
-  key_name        = "ppsl-mo-prod-mumbai"
   tags = {
     Terraform    = "True"
     environment  = "prod"
