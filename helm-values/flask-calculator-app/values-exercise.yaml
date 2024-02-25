@@ -110,11 +110,11 @@ ingress:
   enabled: false
 
 ingressExt:
-  enabled: false
+  enabled: true
   annotations:
     # alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:ap-south-1:182401677120:certificate/34e13411-f8f1-4df4-a672-64c9d79f90c5"
     alb.ingress.kubernetes.io/group.name: prod-fca
-    alb.ingress.kubernetes.io/healthcheck-path: /health
+    alb.ingress.kubernetes.io/healthcheck-path: /fca/health
     alb.ingress.kubernetes.io/healthcheck-port: "6005"
     alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
     alb.ingress.kubernetes.io/healthcheck-timeout-seconds: "3"
@@ -127,12 +127,20 @@ ingressExt:
     alb.ingress.kubernetes.io/unhealthy-threshold-count: "3"
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/tags: component=fca,environment=prod
+  path: 
+    /fca:
+            pathType: Prefix
+            backend:
+              service:
+                name: flask-calculator-app
+            port:
+              number: 80
     # kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: review-service-stg.paytm.com
-      paths:
-      - path: /*
-        pathType: ImplementationSpecific
+  # hosts:
+  #   - host: *
+  #     paths:
+  #     - path: /*
+  #       pathType: ImplementationSpecific
   tls: []
 
 # Ingress section ends here
