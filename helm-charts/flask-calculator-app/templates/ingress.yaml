@@ -41,7 +41,6 @@ spec:
         paths:
           - path: {{ .Values.ingress.path }}
             pathType: {{ .Values.ingress.pathType }}
-            {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
             backend:
               {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
               service:
