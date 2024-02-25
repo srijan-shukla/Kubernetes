@@ -1,0 +1,16 @@
+{{- if and .Values.podDisruptionBudget.enabled (gt (.Values.replicaCount | int) 1) }}
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  labels:
+    app: {{ template "newApp.name" . }}
+    chart: {{ template "newApp.chart" . }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+  name: {{ template "newApp.fullname" . }}
+spec:
+  selector:
+    matchLabels:
+      application: {{ template "newApp.name" . }}
+  minAvailable: {{ .Values.podDisruptionBudget.minAvailable }}
+{{- end }}

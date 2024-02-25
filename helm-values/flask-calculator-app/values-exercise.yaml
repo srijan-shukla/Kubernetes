@@ -1,0 +1,115 @@
+fullnameOverride: flask-calculator-app
+namespace: exercise 
+
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 2
+  targetCPUUtilizationPercentage: 90
+replicaCount: 1
+
+strategyType:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+
+podAnnotations:
+  cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
+
+labels:
+  env: "exercise"
+  application: "flask-calculator-app"
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+    # eks.amazonaws.com/role-arn: 
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podSecurityContext: 
+   fsGroup: 2001
+
+securityContext: 
+
+image:
+  repository: 590184126329.dkr.ecr.ap-south-1.amazonaws.com/flask-calculator-app/exercise
+  pullPolicy: IfNotPresent
+  tag: 'latest'
+
+env: []  
+  
+envFrom:
+  POD_IP: "status.podIP"
+  POD_SERVICE_ACCOUNT: "spec.serviceAccountName"
+
+container:
+  port: 6005
+
+probes:
+  enabled: true
+  livenessProbe:
+    path: /health
+    port: 6005
+    initialDelaySeconds: 50
+    periodSeconds: 10
+
+  readinessProbe:
+    path: /health
+    port: 6005
+    initialDelaySeconds: 50
+    periodSeconds: 10
+
+resources:
+  limits:
+    cpu: 512m
+    memory: 750Mi
+  requests:
+    cpu: 256m
+    memory: 256Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+    - labelSelector:
+        matchExpressions:
+        - key: application
+          operator: In
+          values:
+          - flask-calculator-app
+      topologyKey: "kubernetes.io/hostname"
+
+service:
+  enabled: true
+  type: ClusterIP
+  name: tomcat
+  port: 80
+  targetPort: 6005
+
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1
+
+# Ingress section starts from here
+
+bucketName: ""
+environment: ""
+springProfileActive: ""
+
+# Ingress section starts here
+
+ingress:
+  enabled: false
+
+ingressExt:
+  enabled: false
+
+# Ingress section ends here

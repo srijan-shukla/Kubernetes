@@ -1,0 +1,140 @@
+fullnameOverride: newApp
+namespace: staging 
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 70
+  #targetMemoryUtilizationPercentage: 80
+
+replicaCount: 1
+
+strategyType:
+    type: RollingUpdate
+
+podAnnotations:
+  vault.hashicorp.com/agent-inject: 'true'
+  vault.hashicorp.com/agent-pre-populate-only: 'true' 
+  vault.hashicorp.com/agent-inject-token: 'true'
+
+labels:
+  envtype: "staging"
+  application: "newApp"
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podSecurityContext: 
+   fsGroup: 2001
+
+securityContext: 
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+#   runAsNonRoot: true
+#   runAsUser: 1000
+  #  runAsUser: 1001
+#   runAsGroup: 2001
+
+image:
+  repository: 123401643140.dkr.ecr.ap-south-1.amazonaws.com/abcd
+  pullPolicy: IfNotPresent
+  tag: v1
+
+env:
+  PROFILE_NAME: "dev"
+  VAULT_PROFILE: "dev"
+envFrom:
+  POD_IP: "status.podIP"
+  POD_SERVICE_ACCOUNT: "spec.serviceAccountName"
+
+container:
+  port: 8080
+
+probes:
+  enabled: true
+  livenessProbe:
+    path: /health/check
+    port: 8080
+    initialDelaySeconds: 180
+    periodSeconds: 15
+
+  readinessProbe:
+    path: /health/check
+    port: 8080
+    initialDelaySeconds: 180
+    periodSeconds: 15
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 200Mi
+  requests:
+    cpu: 100m
+    memory: 100Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+service:
+  enabled: true
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1
+
+# Ingress section starts from here
+
+bucketName: ""
+environment: ""
+springProfileActive: ""
+
+# Ingress section starts here
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internal
+    alb.ingress.kubernetes.io/healthcheck-path: /health/check
+    alb.ingress.kubernetes.io/healthcheck-port: '80'
+    alb.ingress.kubernetes.io/group.name: nonprod-eks-fca
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: newApp.example.com
+      paths:
+      - path: /*
+        pathType: ImplementationSpecific
+  tls: []
+
+ingressExt:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/healthcheck-path: /health/check
+    alb.ingress.kubernetes.io/healthcheck-port: '80'
+    alb.ingress.kubernetes.io/group.name: nonprod-eks-fca-ext
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: newApp-ext.example.com
+      paths:
+      - path: /*
+        pathType: ImplementationSpecific
+  tls: []
+
+# Ingress section ends here
