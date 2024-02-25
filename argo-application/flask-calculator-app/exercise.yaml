@@ -16,7 +16,7 @@ spec:
     namespace: exercise 
   project: default
   source:
-    path: helm-chart/application
+    path: helm-charts/flask-calculator-app
     helm:
       releaseName: flask-calculator-app-exercise
       valueFiles:
