@@ -127,7 +127,6 @@ ingress:
     alb.ingress.kubernetes.io/unhealthy-threshold-count: "3"
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/tags: component=fca,environment=prod
-  /fca:
     path: /fca
     pathType: Prefix
     backend:
