@@ -39,7 +39,7 @@ securityContext:
 image:
   repository: 590184126329.dkr.ecr.ap-south-1.amazonaws.com/flask-calculator-app/exercise
   pullPolicy: IfNotPresent
-  tag: 'latest'
+  tag: '112acca'
 
 env: []  
   
