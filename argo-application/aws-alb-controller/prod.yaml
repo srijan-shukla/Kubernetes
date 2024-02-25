@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: aws-alb-controller-prod
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  # ignoreDifferences:
+  #   - group: autoscaling
+  #     kind: HorizontalPodAutoscaler
+  #     jqPathExpressions:
+  #       - .spec.metrics[].resource.name | select((. == "cpu") or (. == "memory"))
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kube-system 
+  project: default
+  source:
+    path: helm-charts/aws-alb-controller
+    helm:
+      releaseName: aws-alb-controller-prod
+      valueFiles:
+      - ../../helm-values/aws-alb-controller/values-prod.yaml
+    repoURL: https://github.com/srijan-shukla/Kubernetes.git
+    targetRevision: master
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true

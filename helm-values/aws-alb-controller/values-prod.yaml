@@ -1,0 +1,20 @@
+# The name of the Kubernetes cluster. A non-empty value is required
+clusterName: prod-fca
+
+serviceAccount:
+#  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::590184126329:role/kube-system-prod-fca-fca-albcontrlr-@kube-system
+   
+  # Automount API credentials for a Service Account.
+  automountServiceAccountToken: true
+
+# nodeSelector:
+#       worker-type: group-1
+# tolerations:
+# - key: "worker-type"
+#   operator: "Equal"
+#   value: "group-1"
+#   effect: "NoSchedule"

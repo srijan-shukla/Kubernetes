@@ -1,0 +1,26 @@
+image:
+   repository: registry.k8s.io/autoscaling/cluster-autoscaler
+   tag: v1.24.0
+   pullPolicy: Always
+rbac:
+   create: true
+   serviceAccount:
+          annotations:
+            eks.amazonaws.com/role-arn: arn:aws:iam::590184126329:role/kube-system-prod-fca-fca-clstrautsclr-@kube-system
+cloudProvider: aws
+awsRegion: ap-south-1
+autoDiscovery:
+   clusterName: prod-fca
+   enabled: true
+extraArgs:
+   ignore-daemonsets-utilization: true
+
+replicaCount: 1
+resources:
+   limits:
+     cpu: 200m
+     memory: 556Mi
+   requests:
+     cpu: 100m
+     memory: 550Mi
+priorityClassName: system-node-critical
