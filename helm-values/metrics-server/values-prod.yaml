@@ -129,13 +129,4 @@ extraVolumeMounts: []
 
 extraVolumes: []
 
-# nodeSelector:
-#   worker-type: group-1
-
-# tolerations:
-# - key: "worker-type"
-#   operator: "Equal"
-#   value: "group-1"
-#   effect: "NoSchedule"
-
 affinity: {}

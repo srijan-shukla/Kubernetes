@@ -6,11 +6,6 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
-  # ignoreDifferences:
-  #   - group: autoscaling
-  #     kind: HorizontalPodAutoscaler
-  #     jqPathExpressions:
-  #       - .spec.metrics[].resource.name | select((. == "cpu") or (. == "memory"))
   destination:
     server: https://kubernetes.default.svc
     namespace: kube-system 

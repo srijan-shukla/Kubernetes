@@ -133,22 +133,7 @@ backend:
   service:
     name: flask-calculator-app
     port:
-      number: 80
-    
-  # path: 
-  #   /fca:
-  # pathType: Prefix
-  #           backend:
-  #             service:
-  #               name: flask-calculator-app
-  #           port:
-  #             number: 80
-    # kubernetes.io/tls-acme: "true"
-  # hosts:
-  #   - host: *
-  #     paths:
-  #     - path: /*
-  #       pathType: ImplementationSpecific
+      number: 80    
   tls: []
 
 # Ingress section ends here

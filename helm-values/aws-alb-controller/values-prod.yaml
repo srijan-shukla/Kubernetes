@@ -10,11 +10,3 @@ serviceAccount:
    
   # Automount API credentials for a Service Account.
   automountServiceAccountToken: true
-
-# nodeSelector:
-#       worker-type: group-1
-# tolerations:
-# - key: "worker-type"
-#   operator: "Equal"
-#   value: "group-1"
-#   effect: "NoSchedule"
