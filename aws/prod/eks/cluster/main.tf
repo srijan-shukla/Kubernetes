@@ -70,35 +70,6 @@ resource "aws_security_group" "additional" {
       Name = "prod-fca-cluster-additional-sg"
      },
   )
-
-  # ingress {
-  #   from_port   = 0
-  #   to_port     = 65535
-  #   protocol    = "tcp"
-  #   security_groups = ["sg-04e29d804f5d4ba2c"]
-  #   description = "Allow connectivity from cluster to nodes"
-  # } 
-  # ingress {
-  #   from_port   = 80
-  #   to_port     = 80
-  #   protocol    = "tcp"
-  #   security_groups = ["sg-04e29d804f5d4ba2c"]
-  #   description = "connectivity from external alb"
-  # } 
-  # ingress {
-  #   from_port   = 8080
-  #   to_port     = 8080
-  #   protocol    = "tcp"
-  #   security_groups = ["sg-04e29d804f5d4ba2c"]
-  #   description = "connectivity from external alb"
-  # } 
-#   ingress {
-#     from_port   = 80
-#     to_port     = 80
-#     protocol    = "tcp"
-#     security_groups = ["sg-04e29d804f5d4ba2c"]
-#     description = "connectivity from internal alb"
-#   }
 }
 
 
@@ -213,10 +184,6 @@ module "eks" {
     }
   }
 
-#   node_security_group_tags = {
-#     public-sg = true
-#   }
-
   
   # Self Managed Node Group(s)
   self_managed_node_group_defaults = {
@@ -257,10 +224,6 @@ module "eks" {
           }
         }
       }
-      #iam_role_additional_policies = {
-      #  AmazonEC2ContainerRegistryReadOnly = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly",
-      #  AmazonSSMManagedInstanceCore       = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
-     # }
       min_size = 1
       max_size = 30
       capacity_rebalance = false
@@ -310,10 +273,6 @@ module "eks" {
       sed -i '/^set -o errexit/a\\nsource /etc/profile.d/bootstrap.sh' /etc/eks/bootstrap.sh
       EOT
       
-      #bootstrap_extra_args = "--kubelet-extra-args '--node-labels=worker-type=group-1 --register-with-taints=worker-type=group-1:NoSchedule'"
-
-      #bootstrap_extra_args = "--kubelet-extra-args '--node-labels=node.kubernetes.io/lifecycle=spot,worker-type=group-1 --register-with-taints=worker-type=group-1:NoSchedule'"
-      #bootstrap_extra_args = "--kubelet-extra-args '--node-labels=node.kubernetes.io/lifecycle=spot'"
       # Installation of SSM agent
       post_bootstrap_user_data = <<-EOT
       cd /tmp

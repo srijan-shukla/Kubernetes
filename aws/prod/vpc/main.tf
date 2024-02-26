@@ -3,12 +3,8 @@
 ################################################
 
 provider "aws" {
-#   shared_credentials_files = ["/Users/srijanshukla/terraform-creds"]
-#   shared_config_files      = ["/Users/srijanshukla/terraform-config"]
 
   region     = "ap-south-1"
-#   access_key = "AKIAYS2NXC54UUQCNBAG"
-#   secret_key = "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"
 
 }
 
